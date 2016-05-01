@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Center Parcs</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react.min.js")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react-dom.min.js")
+
+    <script>
+        var userId = "@User.Identity.GetUserId()";
+    </script
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="text-center">
+                <img src="~/Content/centerparcs-logo.png" alt="logo" style="height: 40px; float: left; margin-top: -5px; margin-left: 5px"/>
+                <h4 class="text-center" style="padding-top: 6px">
+                    Expense Manager
+                </h4>
+            </div>
+
+        </div>
+        @if (Request.IsAuthenticated)
+        {
+            <div class="navbar-collapse collapse">
+                @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            @Html.ActionLink("Expenses", "Index", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Summary", "Summary", "Transaction")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Change Password", "ChangePassword", "Account")
+                        </li>
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        }
+    </div>
+</div>
+<br />
+@RenderBody()
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", false)
+
+
+
+</body>
+</html>         
